@@ -1,0 +1,100 @@
+{% comment %} Este archivo es tu plantilla principal. Todas tus otras páginas
+heredarán esta estructura. {% endcomment %} {% load static %} <!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        {% block title %}
+        ObelisIA - Herramientas de IA y Edición Gratuita
+        {% endblock title %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <meta
+      name="description"
+      content="Descubre Obelis IA: tu plataforma gratuita para..."
+    />
+    <meta
+      name="keywords"
+      content="IA, AI, inteligencia artificial, Obelis, ..."
+    />
+    <meta name="author" content="ObelisIA" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://obelis-ia.vercel.app" />
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/ico" />
+    <link rel="apple-touch-icon" href="{% static 'img/logo.webp' %}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://obelis-ia.vercel.app" />
+    <meta
+      property="og:title"
+      content="ObelisIA - Herramientas de IA y Edición Gratuita"
+    />
+    <meta property="og:image" content="{% static 'img/logo.webp' %}" />
+    <meta property="twitter:image" content="{% static 'img/logo.webp' %}" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+
+  <body class="min-h-screen flex flex-col">
+    <nav class="nav-bar text-white p-4 w-full fixed top-0 left-0 z-10 h-16">
+      <div class="navbar-inner-content">
+        <a
+          href="{% url 'home' %}"
+          class="text-2xl font-bold hover:text-cyan-500 transition-colors duration-200"
+        >
+          Obelis <span style="color: #0891b2">IA</span>
+        </a>
+        <button id="menuToggle" class="md:hidden">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="flex-wrap flex items-center md:flex">
+          <a href="{% url 'home' %}" class="nav-item">
+            <i class="fas fa-home nav-icon"></i> Inicio
+          </a>
+
+          <div class="nav-item group">
+            <span class="cursor-pointer">
+              <i class="fas fa-robot nav-icon"></i> Herramientas IA
+              <i class="fas fa-chevron-right arrow-icon"></i>
+            </span>
+            <div class="submenu">
+              <a href="#" class="submenu-item">Generador de Imágenes IA</a>
+              <a href="#" class="submenu-item">Generador de Texto IA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %} {% endblock content %}
+
+    <div id="subscriptionModal" class="modal-overlay subscription-modal"></div>
+    <div id="cookieConsent" class="cookie-consent"></div>
+    <div id="messageModal" class="modal-overlay"></div>
+
+    <footer class="w-full text-gray-400 text-center py-6 paralaje">
+      <p class="text-sm">
+        © {% now "Y" %} <span class="text-cyan-500 font-bold">ObelisIA</span>.
+        Todos los derechos reservados.
+      </p>
+      <p class="text-xs mt-2">
+        <a href="#" class="hover:text-cyan-400">Política de Privacidad</a> |
+        <a href="#" class="hover:text-cyan-400">Términos de Servicio</a>
+      </p>
+    </footer>
+
+    <script type="module" src="{% static 'js/home-app.js' %}" defer></script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+
+    {% block extra_scripts %} {% endblock extra_scripts %}
+  </body>
+</html>
