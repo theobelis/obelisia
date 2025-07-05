@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}ObelisIA - Generador de Música IA{% endblock %}
+
+{% comment %} Añadimos los estilos específicos de esta página {% endcomment %}
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'ia_audio/css/style.css' %}">
+{% endblock extra_styles %}
+
+
+{% block content %}
+<main class="flex flex-col items-center w-full flex-grow paralaje">
+  <section class="ia-section intro-section">
+    <h2 class="section-title">
+      Generador de Música IA:
+      <span class="text-cyan-500">El Sonido de tu Imaginación</span>
+    </h2>
+    <p class="section-description">
+      Transforma tus ideas en composiciones musicales. Describe un género,
+      un ambiente o una escena, y nuestra inteligencia artificial creará una
+      pista de audio original para tus proyectos.
+    </p>
+    <a href="#iaGeneratorSection" class="btn-primary mt-8 inline-block">
+      Ir al Generador
+    </a>
+  </section>
+
+  <section class="ia-section how-to-section paralaje-svg">
+    <h2 class="section-title">
+      Cómo <span class="text-cyan-500">Componer</span> tu Música
+    </h2>
+    <div class="how-to-steps-grid">
+      <div class="step-card-ia">
+        <div class="step-number">1</div>
+        <h3>Describe la Melodía</h3>
+        <p>
+          Escribe qué quieres escuchar. Usa adjetivos, menciona
+          instrumentos, tempo y emociones para guiar a la IA.
+        </p>
+      </div>
+      <div class="step-card-ia">
+        <div class="step-number">2</div>
+        <h3>Elige Género y Ambiente</h3>
+        <p>
+          Selecciona opciones como "Cinemático" o "Lo-fi" y un ambiente como
+          "Épico" o "Relajante" para afinar el resultado.
+        </p>
+      </div>
+      <div class="step-card-ia">
+        <div class="step-number">3</div>
+        <h3>Genera y Descarga</h3>
+        <p>
+          Haz clic en "Generar Música" y escucha tu creación. Si te gusta,
+          descárgala en formato MP3 para usarla donde quieras.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="iaGeneratorSection"
+    class="w-full max-w-5xl px-4 py-16 paralaje-svg"
+  >
+    <div
+      class="ia-generator-layout-container"
+      style="
+        grid-template-columns: minmax(200px, 320px) 1fr;
+        grid-template-rows: auto;
+      "
+    >
+      <aside class="ia-generator-aside ia-generator-left-aside">
+        <h2 class="text-xl font-bold text-white mb-4">
+          <i class="fas fa-sliders-h text-cyan-400 mr-2"></i>Parámetros
+        </h2>
+        <div class="options-group">
+          <label
+            for="genre-select"
+            class="block text-lg font-semibold text-gray-300 mb-2"
+            >Género Musical</label
+          >
+          <select
+            id="genre-select"
+            class="w-full p-2 mb-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-cyan-500 focus:border-cyan-500 text-sm"
+          >
+            <option value="acoustic">Acústico</option>
+            <option value="ambient">Ambiental</option>
+            <option value="cinematic">Cinemático</option>
+            <option value="electronic">Electrónico</option>
+            <option value="lo-fi">Lo-fi</option>
+            <option value="rock">Rock</option>
+            <option value="rap">HipHop</option>
+            <option value="reggae">Reggae</option>
+            <option value="urban">Reggaeton</option>
+          </select>
+        </div>
+        <div class="options-group">
+          <label
+            for="mood-select"
+            class="block text-lg font-semibold text-gray-300 mb-2"
+            >Ambiente</label
+          >
+          <select
+            id="mood-select"
+            class="w-full p-2 mb-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-cyan-500 focus:border-cyan-500 text-sm"
+          >
+            <option value="calm">Relajante</option>
+            <option value="epic">Épico</option>
+            <option value="happy">Feliz</option>
+            <option value="dark">Oscuro</option>
+            <option value="dramatic">Dramático</option>
+          </select>
+        </div>
+        <div class="options-group">
+          <label
+            for="duration-slider"
+            class="block text-lg font-semibold text-gray-300 mb-2"
+            >Duración: <span id="duration-value">20s</span></label
+          >
+          <input
+            type="range"
+            id="duration-slider"
+            min="10"
+            max="30"
+            value="20"
+            class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer dynamic-slider"
+          />
+          <div class="flex justify-between text-sm text-gray-400 mt-1">
+            <span>10s</span>
+            <span>30s</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="ia-generator-main-content">
+        <h1 class="text-3xl font-extrabold text-white mb-4 text-center">
+          Generador de Música con <span class="text-cyan-500">IA</span>
+        </h1>
+        <div class="mb-6 w-full">
+          <textarea
+            id="prompt-audio"
+            class="w-full p-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-base shadow-inner resize-none placeholder-gray-500"
+            rows="4"
+            placeholder="Ej: Guitarra acústica suave con un ritmo de batería ligero, estilo folk, para un video de viaje."
+          ></textarea>
+        </div>
+        <div class="flex items-center gap-4">
+          <button id="generate-audio-btn" class="btn-primary">
+            <li class="fas fa-music"></li>
+            Generar Música
+          </button>
+          <button
+            id="improve-prompt-btn"
+            class="btn-secondary"
+            title="Mejorar descripción con IA"
+          >
+            <i class="fas fa-magic"></i> Mejorar Prompt
+          </button>
+        </div>
+
+        <div id="audio-player-container" class="mt-8 w-full hidden">
+          <h3 class="text-xl font-bold text-white mb-4">Tu Creación:</h3>
+          <audio id="audio-player" controls class="w-full"></audio>
+          <a
+            id="download-audio-link"
+            class="btn-secondary mt-4 inline-block hidden"
+            >Descargar Audio (MP3)</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ia-section faq-section">
+    <h2 class="section-title">
+      Preguntas <span class="text-cyan-500">Frecuentes</span>
+    </h2>
+    <div class="faq-container">
+      <div class="faq-item">
+        <h3 class="faq-question">
+          ¿Puedo usar esta música en mis videos de YouTube?<i
+            class="fas fa-chevron-down faq-arrow"
+          ></i>
+        </h3>
+        <div class="faq-answer">
+          Sí, la música generada es libre de derechos (royalty-free) y
+          puedes usarla en tus proyectos personales y comerciales, como
+          videos, podcasts o como música de fondo.
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">
+          ¿Cuánto tiempo tarda en generarse el audio?<i
+            class="fas fa-chevron-down faq-arrow"
+          ></i>
+        </h3>
+        <div class="faq-answer">
+          El tiempo de generación depende de la duración solicitada y la
+          complejidad del prompt, pero generalmente tarda entre 30 segundos
+          y 2 minutos.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="messageModal" class="modal-overlay">
+  <div class="modal-content">
+    <button id="messageModalCloseButton" class="modal-close-button">
+      &times;
+    </button>
+    <p id="messageModalText"></p>
+    <div id="messageModalIcon"></div>
+  </div>
+</div>
+
+<div id="loadingOverlayModal" class="modal-overlay loading-overlay-modal">
+  <div class="modal-content text-center">
+    <img
+      src="/static/img/Pocoyo.gif"
+      alt="Cargando..."
+      id="pocoyo-gif"
+      class="mx-auto mb-4 hidden"
+      width="120"
+    />
+    <p id="loadingMessageTextModal" class="text-lg font-semibold"></p>
+    <div
+      class="w-full bg-gray-700 rounded-full h-2.5 mt-4 hidden"
+      id="progress-bar-container"
+    >
+      <div
+        class="bg-cyan-500 h-2.5 rounded-full"
+        id="progress-bar"
+        style="width: 0%"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<div id="ad-modal" class="modal-overlay">
+  <div class="modal-content text-center" style="max-width: 600px">
+    <h3 class="text-xl font-bold mb-4">Anuncio Requerido</h3>
+    <p class="mb-4">
+      Para continuar generando, por favor visualiza el siguiente anuncio.
+    </p>
+    <p class="mb-4">
+      Esto hace que
+      <a href="/static" class="font-bold"
+        >Obelis<span class="text-cyan-500">IA</span></a
+      >
+      siga siendo gratuito y sostenible.
+    </p>
+    <div
+      id="ad-iframe-container"
+      class="w-full h-72 bg-black flex items-center justify-center"
+    >
+      <p class="text-gray-400">Cargando anuncio...</p>
+    </div>
+    <p id="ad-timer" class="mt-4 font-mono text-lg"></p>
+  </div>
+</div>
+{% endblock content %}
+
+{% comment %} Añadimos los scripts específicos de esta página al final {% endcomment %}
+{% block extra_scripts %}
+    <script type="module" src="{% static 'ia_audio/js/app.js' %}" defer></script>
+{% endblock extra_scripts %}
