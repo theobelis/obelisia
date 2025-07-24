@@ -1,0 +1,43 @@
+# Dependencias de Composer
+# Render instalará esto por su cuenta usando composer.json y composer.lock
+/vendor/
+
+# Archivos de configuración local y secretos.
+# Estos se manejarán con Variables de Entorno en Render.
+.env
+.env.local
+config/local_config.php
+src/Config/local_settings.php
+
+# Archivos de base de datos (solo backups o datos sensibles)
+# Es buena idea mantener los archivos .sql de ESTRUCTURA, pero no los que tengan datos de usuarios.
+*.sql.bak
+backup_*.sql
+
+# Logs y archivos temporales
+logs/
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Archivos de caché
+cache/
+tmp/
+temp/
+.phpunit.cache/
+
+# Archivos de sistema operativo y de IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-*
+
+# Node.js (si se usara en el futuro)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json

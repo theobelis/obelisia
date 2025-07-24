@@ -1,0 +1,20 @@
+# Especifica el entorno de ejecución. Usa la versión de PHP que necesites.
+runtime: php82 # Puedes usar php81, php82, etc.
+
+# Por defecto, App Engine buscará un archivo public/index.php.
+# Si tu archivo principal está en otro lugar, debes especificarlo.
+# Este 'entrypoint' es ideal para frameworks como Laravel o Symfony,
+# o si usas un controlador frontal en public/index.php.
+entrypoint: serve public/index.php
+
+# Para aplicaciones más simples sin un directorio /public,
+# puedes dejar que sirva todos los archivos .php.
+# handlers:
+# - url: /.*
+#   script: auto
+
+# Configuración para variables de entorno (muy recomendado para claves de API, etc.)
+env_variables:
+  APP_KEY: 'tu_llave_secreta'
+  DB_HOST: 'la_ip_de_tu_base_de_datos_cloud_sql'
+  DB_USERNAME: 'tu_usuario_db'
